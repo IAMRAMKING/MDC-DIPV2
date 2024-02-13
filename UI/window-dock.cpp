@@ -6,7 +6,7 @@
 
 void OBSDock::closeEvent(QCloseEvent *event)
 {
-	auto msgBox = []() {
+	/*auto msgBox = []() {
 		QMessageBox msgbox(App()->GetMainWindow());
 		msgbox.setWindowTitle(QTStr("DockCloseWarning.Title"));
 		msgbox.setText(QTStr("DockCloseWarning.Text"));
@@ -30,7 +30,7 @@ void OBSDock::closeEvent(QCloseEvent *event)
 	if (!warned) {
 		QMetaObject::invokeMethod(App(), "Exec", Qt::QueuedConnection,
 					  Q_ARG(VoidFunc, msgBox));
-	}
+	}*/ //iamramking
 
 	QDockWidget::closeEvent(event);
 }

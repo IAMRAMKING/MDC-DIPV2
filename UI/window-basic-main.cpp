@@ -2271,7 +2271,7 @@ void OBSBasic::OBSInit()
 					   "DocksLocked");
 	on_lockDocks_toggled(docksLocked);
 	ui->lockDocks->blockSignals(true);
-	ui->lockDocks->setChecked(docksLocked);
+	ui->lockDocks->setChecked(true);
 	ui->lockDocks->blockSignals(false);
 
 	bool sideDocks = config_get_bool(App()->GlobalConfig(), "BasicWindow",
@@ -9472,18 +9472,19 @@ void OBSBasic::UpdateTitleBar()
 	const char *sceneCollection = config_get_string(
 		App()->GlobalConfig(), "Basic", "SceneCollection");
 
-	name << "OBS ";
+	//name << "OBS "; //iamramking
 	if (previewProgramMode)
 		name << "Studio ";
 
-	name << App()->GetVersionString(false);
+	//name << App()->GetVersionString(false); //iamramking
 	if (safe_mode)
 		name << " (" << Str("TitleBar.SafeMode") << ")";
 	if (App()->IsPortableMode())
 		name << " - " << Str("TitleBar.PortableMode");
 
-	name << " - " << Str("TitleBar.Profile") << ": " << profile;
-	name << " - " << Str("TitleBar.Scenes") << ": " << sceneCollection;
+	//name << " - " << Str("TitleBar.Profile") << ": " << profile; //iamramking
+	//name << " - " << Str("TitleBar.Scenes") << ": " << sceneCollection; //iamramking
+	name << "MDC-DIPV2";
 
 	setWindowTitle(QT_UTF8(name.str().c_str()));
 }
@@ -9615,6 +9616,7 @@ void OBSBasic::on_lockDocks_toggled(bool lock)
 
 	ui->scenesDock->setFeatures(mainFeatures);
 	ui->sourcesDock->setFeatures(mainFeatures);
+	addDockWidget(Qt::LeftDockWidgetArea, ui->sourcesDock); //iamramking
 	ui->mixerDock->setFeatures(mainFeatures);
 	ui->transitionsDock->setFeatures(mainFeatures);
 	ui->controlsDock->setFeatures(mainFeatures);

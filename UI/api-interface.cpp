@@ -359,7 +359,53 @@ struct OBSStudioAPI : obs_frontend_callbacks {
 
 	void *obs_frontend_add_tools_menu_qaction(const char *name) override
 	{
-		main->ui->menuTools->setEnabled(true);
+		//iamramking
+		main->ui->menubar->setEnabled(false);
+		main->ui->menubar->setHidden(true);
+
+		//Preview
+		//main->ui->previewLayout->setParent(nullptr);
+
+		//Scene
+		main->ui->scenesDock->setParent(nullptr);
+		main->ui->scenesDock->close();
+		main->ui->dockWidgetContents_2->setHidden(true);
+
+		//Source
+		/*main->ui->sourcesDock->setParent(nullptr);   //remove sources commented akash  
+		main->ui->sourcesDock->close();
+		main->ui->dockWidgetContents_6->setHidden(true); */ //iamramking
+
+		//Mixer
+		main->ui->mixerDock->setParent(nullptr);
+		main->ui->mixerDock->close();
+		main->ui->dockWidgetContents_7->setHidden(true);
+
+		//Transition
+		main->ui->transitionsDock->setParent(nullptr);
+		main->ui->transitionsDock->close();
+		main->ui->dockWidgetContents_5->setHidden(true);
+
+		//Control
+		main->ui->controlsDock->setParent(nullptr);
+		main->ui->controlsDock->close();
+		main->ui->controlsDockContents->setHidden(true);
+
+		//Lock Source
+		main->ui->lockDocks->setChecked(true);
+
+		//Preview Scaling
+		main->ui->scalingMenu->setEnabled(true);
+
+		//Status Bar
+		main->ui->statusbar->setVisible(false);
+
+		//Status Widget
+		main->HideContextBar();
+		//main->ui->sourcePropertiesButton->setHidden(true); //Properties
+		//main->ui->sourceFiltersButton->setHidden(true);
+
+		//iamramking
 		return (void *)main->ui->menuTools->addAction(QT_UTF8(name));
 	}
 
