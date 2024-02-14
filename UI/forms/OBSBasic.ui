@@ -882,7 +882,7 @@
     <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetMovable|QDockWidget::DockWidgetFloatable</set>
    </property>
    <property name="windowTitle">
-    <string>Basic.Main.Sources</string>
+    <string>Tools</string>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>

@@ -470,9 +470,9 @@ OBSBasic::OBSBasic(QWidget *parent)
 	 * And hide all docks before restoring parent geometry */
 #define SETUP_DOCK(dock)                                    \
 	setupDockAction(dock);                              \
-	ui->menuDocks->addAction(dock->toggleViewAction()); \
+	/*ui->menuDocks->addAction(dock->toggleViewAction()); */\
 	dock->setVisible(false);
-
+	
 	SETUP_DOCK(ui->scenesDock);
 	SETUP_DOCK(ui->sourcesDock);
 	SETUP_DOCK(ui->mixerDock);
@@ -480,7 +480,7 @@ OBSBasic::OBSBasic(QWidget *parent)
 	SETUP_DOCK(ui->controlsDock);
 	SETUP_DOCK(statsDock);
 #undef SETUP_DOCK
-
+	
 	// Register shortcuts for Undo/Redo
 	ui->actionMainUndo->setShortcut(Qt::CTRL | Qt::Key_Z);
 	QList<QKeySequence> shrt;
@@ -1270,6 +1270,10 @@ retryScene:
 	RefreshQuickTransitions();
 
 	bool previewLocked = obs_data_get_bool(data, "preview_locked");
+
+	previewLocked = true; //lock preview default set //akash.kakade
+
+
 	ui->preview->SetLocked(previewLocked);
 	ui->actionLockPreview->setChecked(previewLocked);
 
@@ -2269,9 +2273,9 @@ void OBSBasic::OBSInit()
 
 	bool docksLocked = config_get_bool(App()->GlobalConfig(), "BasicWindow",
 					   "DocksLocked");
-	on_lockDocks_toggled(docksLocked);
+	on_lockDocks_toggled(true); //iamramking
 	ui->lockDocks->blockSignals(true);
-	ui->lockDocks->setChecked(true);
+	ui->lockDocks->setChecked(true); //iamramking
 	ui->lockDocks->blockSignals(false);
 
 	bool sideDocks = config_get_bool(App()->GlobalConfig(), "BasicWindow",
@@ -9616,7 +9620,7 @@ void OBSBasic::on_lockDocks_toggled(bool lock)
 
 	ui->scenesDock->setFeatures(mainFeatures);
 	ui->sourcesDock->setFeatures(mainFeatures);
-	addDockWidget(Qt::LeftDockWidgetArea, ui->sourcesDock); //iamramking
+	addDockWidget(Qt::RightDockWidgetArea, ui->sourcesDock); //iamramking
 	ui->mixerDock->setFeatures(mainFeatures);
 	ui->transitionsDock->setFeatures(mainFeatures);
 	ui->controlsDock->setFeatures(mainFeatures);
@@ -10472,7 +10476,7 @@ QAction *OBSBasic::AddDockWidget(QDockWidget *dock)
 	QDockWidget::DockWidgetFeatures features =
 		lock ? QDockWidget::NoDockWidgetFeatures
 		     : (QDockWidget::DockWidgetClosable |
-			QDockWidget::DockWidgetMovable |
+			/*QDockWidget::DockWidgetMovable |*/ //iamramking
 			QDockWidget::DockWidgetFloatable);
 
 	dock->setFeatures(features);
@@ -10515,7 +10519,7 @@ void OBSBasic::AddDockWidget(QDockWidget *dock, Qt::DockWidgetArea area,
 	QDockWidget::DockWidgetFeatures features =
 		lock ? QDockWidget::NoDockWidgetFeatures
 		     : (QDockWidget::DockWidgetClosable |
-			QDockWidget::DockWidgetMovable |
+			/*QDockWidget::DockWidgetMovable |*/ //iamramking
 			QDockWidget::DockWidgetFloatable);
 
 	setupDockAction(dock);
@@ -10531,6 +10535,8 @@ void OBSBasic::AddDockWidget(QDockWidget *dock, Qt::DockWidgetArea area,
 					    dock->toggleViewAction());
 	else
 		ui->menuDocks->addAction(dock->toggleViewAction());
+
+	ui->menuDocks->setVisible(false);
 
 	if (extraBrowser)
 		return;

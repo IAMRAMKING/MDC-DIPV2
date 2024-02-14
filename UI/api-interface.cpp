@@ -375,6 +375,7 @@ struct OBSStudioAPI : obs_frontend_callbacks {
 		/*main->ui->sourcesDock->setParent(nullptr);   //remove sources commented akash  
 		main->ui->sourcesDock->close();
 		main->ui->dockWidgetContents_6->setHidden(true); */ //iamramking
+		
 
 		//Mixer
 		main->ui->mixerDock->setParent(nullptr);
@@ -402,8 +403,6 @@ struct OBSStudioAPI : obs_frontend_callbacks {
 
 		//Status Widget
 		main->HideContextBar();
-		//main->ui->sourcePropertiesButton->setHidden(true); //Properties
-		//main->ui->sourceFiltersButton->setHidden(true);
 
 		//iamramking
 		return (void *)main->ui->menuTools->addAction(QT_UTF8(name));

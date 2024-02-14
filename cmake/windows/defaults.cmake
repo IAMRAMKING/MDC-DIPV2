@@ -14,8 +14,8 @@ set(OBS_EXECUTABLE_DESTINATION bin/64bit)
 set(OBS_LIBRARY_DESTINATION lib)
 set(OBS_INCLUDE_DESTINATION include)
 # Set relative paths used by OBS for self-discovery
-set(OBS_PLUGIN_PATH "../../${CMAKE_INSTALL_LIBDIR}/obs-plugins/64bit")
-set(OBS_SCRIPT_PLUGIN_PATH "../../${OBS_DATA_DESTINATION}/obs-scripting/64bit")
+set(OBS_PLUGIN_PATH "../../${CMAKE_INSTALL_LIBDIR}/mdc-plugins/64bit")
+set(OBS_SCRIPT_PLUGIN_PATH "../../${OBS_DATA_DESTINATION}/mdc-scripting/64bit")
 set(OBS_DATA_PATH "../../${OBS_DATA_DESTINATION}")
 
 # Enable find_package targets to become globally available targets
