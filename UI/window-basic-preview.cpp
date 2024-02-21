@@ -651,6 +651,34 @@ void OBSBasicPreview::mousePressEvent(QMouseEvent *event)
 	changed = false;
 }
 
+void OBSBasicPreview::mouseDoubleClickEvent(QMouseEvent *event)
+{
+	if (event->button() == Qt::  LeftButton) {
+		// Handle double-click event
+		/*QMessageBox::information(nullptr, "Title",
+					 "Right button double-clicked at",
+					 QMessageBox::Ok);*/
+
+		OBSBasic *main = OBSBasic::Get();
+		//main->OpenProjector(nullptr, /-1/0, ProjectorType::Preview);
+
+		//FullScreen change
+		OBSSceneItem item = main->GetCurrentSceneItem();
+
+		if (!item)
+			return;
+
+		OBSSource source = obs_sceneitem_get_source(item);
+
+		main->OpenProjector(obs_sceneitem_get_source(item), 0,
+				    ProjectorType::Source);
+		//FullScreen change
+	}
+
+	// Call the base class implementation to handle other cases
+	QWidget::mouseDoubleClickEvent(event);
+}
+
 void OBSBasicPreview::UpdateCursor(uint32_t &flags)
 {
 	if (obs_sceneitem_locked(stretchItem)) {
