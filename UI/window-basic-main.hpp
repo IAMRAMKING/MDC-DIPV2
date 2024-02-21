@@ -1051,7 +1051,7 @@ protected:
 
 private slots:
 	void on_actionFullscreenInterface_triggered();
-
+	bool eventFilter(QObject *obj, QEvent *event);
 	void on_actionShow_Recordings_triggered();
 	void on_actionRemux_triggered();
 	void on_action_Settings_triggered();
@@ -1227,7 +1227,10 @@ private slots:
 	void StackedMixerAreaContextMenuRequested();
 
 	void ResizeOutputSizeOfSource();
-
+	//docking souceto specific area akash
+	void DockSourceOnScreen();
+	void WebSocketVisible();
+	//docking souceto specific area akash
 	void RepairOldExtraDockName();
 	void RepairCustomExtraDockName();
 

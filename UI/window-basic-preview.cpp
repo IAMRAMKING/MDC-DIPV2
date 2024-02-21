@@ -1,6 +1,6 @@
 #include <QGuiApplication>
 #include <QMouseEvent>
-
+#include <QMessageBox>
 #include <cmath>
 #include <string>
 #include <graphics/vec4.h>
@@ -528,6 +528,25 @@ void OBSBasicPreview::GetStretchHandleData(const vec2 &pos, bool ignoreGroup)
 
 void OBSBasicPreview::keyPressEvent(QKeyEvent *event)
 {
+	OBSBasic *main = OBSBasic::Get();
+	if (event->key() == Qt::Key_Return) {
+		//OBSBasic *main = OBSBasic::Get();
+		main->DockSourceOnScreen();
+		setCursor(Qt::OpenHandCursor);
+		scrollMode = true;
+	}
+
+
+	if (event->key() == Qt::Key_W) {
+		for (QAction *action : main->ui->menuTools->actions()) {
+			// Perform actions on each QAction
+
+			if (action->text() == "WebSocket Server Settings")
+				action->triggered(true);
+		}
+	}
+	
+
 	if (!IsFixedScaling() || event->isAutoRepeat()) {
 		OBSQTDisplay::keyPressEvent(event);
 		return;
@@ -650,18 +669,14 @@ void OBSBasicPreview::mousePressEvent(QMouseEvent *event)
 		obs_scene_save_transform_states(main->GetCurrentScene(), true);
 	changed = false;
 }
-
+//FullScreen on double-click akash
 void OBSBasicPreview::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (event->button() == Qt::  LeftButton) {
+	if (event->button() == Qt::LeftButton) {
 		// Handle double-click event
-		/*QMessageBox::information(nullptr, "Title",
-					 "Right button double-clicked at",
-					 QMessageBox::Ok);*/
-
+		
 		OBSBasic *main = OBSBasic::Get();
-		//main->OpenProjector(nullptr, /-1/0, ProjectorType::Preview);
-
+		
 		//FullScreen change
 		OBSSceneItem item = main->GetCurrentSceneItem();
 
@@ -674,7 +689,6 @@ void OBSBasicPreview::mouseDoubleClickEvent(QMouseEvent *event)
 				    ProjectorType::Source);
 		//FullScreen change
 	}
-
 	// Call the base class implementation to handle other cases
 	QWidget::mouseDoubleClickEvent(event);
 }

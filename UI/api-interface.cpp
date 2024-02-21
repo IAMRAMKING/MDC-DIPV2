@@ -363,6 +363,8 @@ struct OBSStudioAPI : obs_frontend_callbacks {
 		main->ui->menubar->setEnabled(false);
 		main->ui->menubar->setHidden(true);
 
+		//main->ui->menuTools->
+
 		//Preview
 		//main->ui->previewLayout->setParent(nullptr);
 

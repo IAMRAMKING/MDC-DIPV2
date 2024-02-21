@@ -5983,6 +5983,8 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 		popup.addAction(QTStr("Screenshot.Preview"), this,
 				&OBSBasic::ScreenshotScene);
 
+		//Akash MenuOptionadd 0403
+
 		popup.addSeparator();
 	}
 
@@ -8422,6 +8424,7 @@ void OBSBasic::on_previewDisabledWidget_customContextMenuRequested()
 
 	QAction *previewWindow = popup.addAction(QTStr("PreviewWindow"), this,
 						 &OBSBasic::OpenPreviewWindow);
+	//Akash MenuOptionadd 0403
 
 	popup.addMenu(previewProjectorMain);
 	popup.addAction(previewWindow);
@@ -9607,6 +9610,48 @@ void OBSBasic::on_resetDocks_triggered(bool force)
 	activateWindow();
 }
 
+bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
+{
+	//iamramking
+	//iamramking
+	if (obj == ui->dockWidgetContents_6) {
+		if (event->type() == QEvent::Enter) {
+			if (ui->dockWidgetContents_6->width() == 2) {
+				ui->sourcesDock->setFixedWidth(170);
+				ui->dockWidgetContents_6->setFixedWidth(170);
+			}
+		}
+	} else if (obj == ui->sourcesDock) {
+		if (event->type() == QEvent::MouseButtonDblClick) {
+			if (ui->dockWidgetContents_6->width() == 170) {
+				ui->sourcesDock->setFixedWidth(2);
+				ui->dockWidgetContents_6->setFixedWidth(2);
+			}
+		}
+	}
+	//else if (obj == ui->previewLayout) {
+
+	//	if (event->type() == QEvent::KeyPress) {
+	//		//for (QAction *action : ui->menuTools->actions()) {
+	//	
+
+	//		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+
+	//		// Check if the pressed key is 'W'
+	//		if (keyEvent->key() == Qt::Key_W) {
+	//			// Handle the 'W' key press
+	//			QMessageBox::information(nullptr, "Information",	 
+	//			"W key pressed!");
+	//			// Your logic here
+	//		}
+	//		}
+	//}
+	return QObject::eventFilter(obj, event);
+	//iamramking
+
+	//iamramking
+}
+
 void OBSBasic::on_lockDocks_toggled(bool lock)
 {
 	QDockWidget::DockWidgetFeatures features =
@@ -9621,6 +9666,11 @@ void OBSBasic::on_lockDocks_toggled(bool lock)
 	ui->scenesDock->setFeatures(mainFeatures);
 	ui->sourcesDock->setFeatures(mainFeatures);
 	addDockWidget(Qt::RightDockWidgetArea, ui->sourcesDock); //iamramking
+	ui->sourcesDock->setFixedWidth(2);                       //iamramking
+	ui->dockWidgetContents_6->setFixedWidth(2);              //iamramking
+	ui->dockWidgetContents_6->installEventFilter(this);      //iamramking
+	//ui->previewLayout->installEventFilter(this);		//iamramking 4march
+	ui->sourcesDock->installEventFilter(this);
 	ui->mixerDock->setFeatures(mainFeatures);
 	ui->transitionsDock->setFeatures(mainFeatures);
 	ui->controlsDock->setFeatures(mainFeatures);
@@ -10449,6 +10499,297 @@ void OBSBasic::ResizeOutputSizeOfSource()
 	config_save_safe(basicConfig, "tmp", nullptr);
 	on_actionFitToScreen_triggered();
 }
+
+//docking souceto specific area akash
+
+//auto resize of source akash
+//void OBSBasic::DockSourceOnScreen()
+//{
+//	int iSourcecount = 0,iTotalSourceCount = 0;
+//	int rows = 0, columns = 0;
+//	int spacing = 10; // Set your desired spacing value
+//
+//	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+//
+//	while (sceneItem) {
+//		iTotalSourceCount++;
+//		iSourcecount++;
+//		sceneItem = ui->sources->Get(iSourcecount);
+//	}
+//
+//	if (iTotalSourceCount < 3)
+//	{
+//	   rows = 2;
+//	   columns = 1;
+//
+//	} else if ((3 < iTotalSourceCount) && (iTotalSourceCount < 5)) {
+//
+//	   rows = 2;
+//	   columns = 2;
+//
+//	} else if ((5 < iTotalSourceCount) && (iTotalSourceCount < 9)) {
+//
+//	   rows = 3;
+//	   columns = 3;
+//
+//	} else if ((9 < iTotalSourceCount) && (iTotalSourceCount < 17)) {
+//
+//	   rows = 4;
+//	   columns = 4;
+//
+//	}
+//
+//	// Get the size of the preview screen
+//	QSize previewSize(ui->preview->width(), ui->preview->height());
+//
+//	int cellWidth = previewSize.width() / columns;
+//	int cellHeight = previewSize.height() / rows;
+//
+//	cellWidth = cellWidth - spacing;
+//	cellHeight = cellHeight - spacing;
+//
+//	// Initialize variables to keep track of the current row and column
+//	int currentRow = 0;
+//	int currentColumn = 0;
+//
+//	// Get the current scene item
+//	iSourcecount = 0;
+//	/*obs_sceneitem_t **/sceneItem = ui->sources->Get(iSourcecount);
+//	int iColSpacing = 0;
+//	int iRowSpacing = 0;
+//
+//	int x = 0;
+//	int y = 0;
+//	int width = 0;
+//	int height = 0;
+//
+//	while (sceneItem) {
+//
+//	   iColSpacing = spacing;
+//	   if (currentRow == 1) {
+//			iRowSpacing = spacing * (2);
+//	   } else if (currentRow == 2) {
+//			iRowSpacing = spacing * (3);
+//	   } else if (currentRow == 3) {
+//			iRowSpacing = spacing * (4);
+//	   }
+//
+//	   if (currentRow == 0) {
+//		QRect targetRect(currentColumn * (cellWidth + spacing)+
+//				    (spacing * currentColumn),
+//					 currentRow * (cellHeight),
+//				cellWidth, cellHeight);
+//
+//		// Calculate position and size based on the target rect
+//		x = targetRect.x();
+//		y = targetRect.y();
+//		width = targetRect.width();
+//		height = targetRect.height();
+//	   } else if( currentRow == 3){
+//		QRect targetRect(currentColumn * (cellWidth + spacing) +
+//					 (spacing * currentColumn),
+//				 currentRow * (cellHeight + iRowSpacing) +
+//					 (iRowSpacing ),
+//				 cellWidth, cellHeight);
+//
+//		// Calculate position and size based on the target rect
+//		x = targetRect.x();
+//		y = targetRect.y();
+//		width = targetRect.width();
+//		height = targetRect.height();
+//	   }
+//	   else {
+//		QRect targetRect(currentColumn * (cellWidth + spacing) +
+//					 (spacing * currentColumn),
+//				 currentRow * (cellHeight + iRowSpacing) +
+//					 (iRowSpacing + 10),
+//				 cellWidth, cellHeight);
+//
+//		// Calculate position and size based on the target rect
+//		x = targetRect.x();
+//		y = targetRect.y();
+//		width = targetRect.width();
+//		height = targetRect.height();
+//	   }
+//		// // Calculate position and size based on the target rect
+//		//int x = targetRect.x();
+//		//int y = targetRect.y();
+//		//int width = targetRect.width();
+//		//int height = targetRect.height();
+//
+//		vec2 pos;
+//		pos.x = x;
+//		pos.y = y;
+//
+//		// Update source position
+//		obs_sceneitem_set_pos(sceneItem, &pos);
+//
+//		vec2 size;
+//		size.x = static_cast<float>(width);
+//		size.y = static_cast<float>(height);
+//
+//		// Update source size
+//		obs_sceneitem_set_bounds(sceneItem, &size);
+//
+//		// Update currentRow and currentColumn for the next source
+//		currentColumn++;
+//		if (currentColumn >= columns) {
+//			currentColumn = 0;
+//			currentRow++;
+//		}
+//
+//		iSourcecount++;
+//		sceneItem = ui->sources->Get(iSourcecount);
+//	}
+//}
+void OBSBasic::WebSocketVisible()
+{
+	for (QAction *action : ui->menuTools->actions()) {
+			// Perform actions on each QAction
+
+			if (action->text() == "WebSocket Server Settings")
+				action->triggered(true);
+	}
+	
+}
+
+
+void OBSBasic::DockSourceOnScreen()
+{
+	
+	// Get the size of the preview screen
+	QSize previewSize(ui->preview->width(), ui->preview->height());
+
+	int iSourcecount = 0, iTotalSourceCount = 0;
+	int rows = 0, columns = 0;
+	int spacing = 10; // Set your desired spacing value
+	
+	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+	
+	while (sceneItem) {
+			iTotalSourceCount++;
+			iSourcecount++;
+			sceneItem = ui->sources->Get(iSourcecount);
+	}
+	
+	if (iTotalSourceCount < 3)
+	{
+		   rows = 2;
+		   columns = 2;
+	
+	} else if ((3 <= iTotalSourceCount) && (iTotalSourceCount < 5)) {
+	
+		   rows = 2;
+		   columns = 2;
+	
+	} else if ((5 <= iTotalSourceCount) && (iTotalSourceCount < 9)) {
+	
+		rows = 3;
+		columns = 3;
+	
+	} else if ((9 <= iTotalSourceCount) && (iTotalSourceCount < 17)) {
+	
+		rows = 4;
+		columns = 4;
+	
+	}
+
+	// Calculate the width and height of each grid cell
+	int cellWidth = (previewSize.width() - (columns + 1) * spacing) / columns;
+	int cellHeight = (previewSize.height() - (rows + 1) * spacing) / rows;
+
+	// Initialize variables to keep track of the current row and column
+	int currentRow = 0;
+	int currentColumn = 0;
+
+	// Get the current scene item
+	iSourcecount = 0;
+	sceneItem = ui->sources->Get(iSourcecount);
+
+	while (sceneItem) {
+		QRect targetRect(currentColumn * (cellWidth + spacing) +
+					 spacing,
+				 currentRow * (cellHeight + spacing) + spacing,
+				 cellWidth, cellHeight);
+
+		// Calculate position and size based on the target rect
+		int x = targetRect.x();
+		int y = targetRect.y();
+		int width = targetRect.width();
+		int height = targetRect.height();
+
+		vec2 pos;
+		pos.x = x;
+		pos.y = y;
+
+		// Update source position
+		obs_sceneitem_set_pos(sceneItem, &pos);
+
+		vec2 size;
+		size.x = static_cast<float>(width);
+		size.y = static_cast<float>(height);
+
+
+		// Update source size
+		obs_sceneitem_set_bounds(sceneItem, &size);
+
+		obs_source_t *source = obs_sceneitem_get_source(sceneItem);
+
+		uint32_t source_cx = obs_source_get_width(source);
+		uint32_t source_cy = obs_source_get_height(source);
+
+		/* if the source's internal size has been set to 0 for whatever reason
+		 * while resizing, do not update transform, otherwise source will be
+		 * stuck invisible until a complete transform reset */
+		if (!source_cx || !source_cy)
+			return;
+
+		vec2 baseSize;
+		vec2_set(&baseSize, float(source_cx), float(source_cy));
+		vec2_div(&size, &size, &baseSize);
+
+		obs_sceneitem_set_scale(sceneItem, &size);
+
+		// Update currentRow and currentColumn for the next source
+		currentColumn++;
+		if (currentColumn >= columns) {
+			currentColumn = 0;
+			currentRow++;
+		}
+
+		iSourcecount++;
+		sceneItem = ui->sources->Get(iSourcecount);
+	}
+}
+
+//void setSceneItemBoxProperties(obs_sceneitem_t *sceneItem, const struct vec2 *newBoxScale, const struct vec3 *translation)
+//{
+//    // Set a new box scale
+//    if (newBoxScale)
+//    {
+//       // obs_sceneitem_set_box_scale(sceneItem, newBoxScale);
+//    }
+//
+//    // Set a new box transform (translation)
+//    if (translation)
+//    {
+//        struct matrix4 currentBoxTransform;
+//        obs_sceneitem_get_box_transform(sceneItem, &currentBoxTransform);
+//
+//        matrix4_translate3f(&currentBoxTransform, &currentBoxTransform, translation->x, translation->y, translation->z);
+//      //  obs_sceneitem_set_box_transform(sceneItem, &currentBoxTransform);
+//    }
+//}
+//
+//void obs_sceneitem_SetBoxScale_from_bound(obs_sceneitem_t *item, const struct vec2 *bounds)
+//{
+//	if (item) {
+//		item->box_scale.x = bounds->x;
+//		item->box_scale.y = bounds->y;
+//	}
+//}
+//docking souceto specific area akash
+
 
 QAction *OBSBasic::AddDockWidget(QDockWidget *dock)
 {
