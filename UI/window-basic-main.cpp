@@ -1271,7 +1271,7 @@ retryScene:
 
 	bool previewLocked = obs_data_get_bool(data, "preview_locked");
 
-	previewLocked = true; //lock preview default set //akash.kakade
+	//previewLocked = true; //lock preview default set //akash.kakade
 
 
 	ui->preview->SetLocked(previewLocked);

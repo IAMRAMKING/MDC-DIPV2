@@ -146,11 +146,11 @@ public:
 	void DrawSceneEditing();
 
 	inline void SetLocked(bool newLockedVal) { locked = newLockedVal; }
-	//inline void ToggleLocked() { locked = !locked; }
-	inline void ToggleLocked()
-	{
-		locked = /*!locked*/ true;
-	} //lock preview default set akash.kakade
+	inline void ToggleLocked() { locked = !locked; }
+	//inline void ToggleLocked()
+	//{
+	//	locked = /*!locked*/ true;
+	//} //lock preview default set akash.kakade
 
 
 	inline bool Locked() const { return locked; }
