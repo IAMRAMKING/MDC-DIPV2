@@ -10647,7 +10647,7 @@ void OBSBasic::WebSocketVisible()
 	for (QAction *action : ui->menuTools->actions()) {
 			// Perform actions on each QAction
 
-			if (action->text() == "WebSocket Server Settings")
+			if (action->text() == "MDC-DIPV2 WebSocket Settings")
 				action->triggered(true);
 	}
 	

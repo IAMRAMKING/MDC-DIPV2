@@ -2432,7 +2432,7 @@ static int run_program(fstream &logFile, int argc, char *argv[])
 			goto run;
 		}
 
-		if (!multi) {
+		/*if (!multi) {
 			QMessageBox mb(QMessageBox::Question,
 				       QTStr("AlreadyRunning.Title"),
 				       QTStr("AlreadyRunning.Text"));
@@ -2444,7 +2444,7 @@ static int run_program(fstream &logFile, int argc, char *argv[])
 
 			mb.exec();
 			cancel_launch = mb.clickedButton() == cancelButton;
-		}
+		}*/ //iamramking Remove Launch Anyway
 
 		if (cancel_launch)
 			return 0;
@@ -2456,13 +2456,13 @@ static int run_program(fstream &logFile, int argc, char *argv[])
 
 		if (multi) {
 			blog(LOG_INFO, "User enabled --multi flag and is now "
-				       "running multiple instances of OBS.");
+				       "running multiple instances of MDC-DIPV2.");
 		} else {
 			blog(LOG_WARNING, "================================");
-			blog(LOG_WARNING, "Warning: OBS is already running!");
+			blog(LOG_WARNING, "Warning: MDC-DIPV2 is already running!");
 			blog(LOG_WARNING, "================================");
 			blog(LOG_WARNING, "User is now running multiple "
-					  "instances of OBS!");
+					  "instances of MDC-DIPV2!");
 			/* Clear unclean_shutdown flag as multiple instances
 			 * running from the same config will lead to a
 			 * false-positive detection.*/

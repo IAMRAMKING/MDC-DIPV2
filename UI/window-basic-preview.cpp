@@ -541,7 +541,7 @@ void OBSBasicPreview::keyPressEvent(QKeyEvent *event)
 		for (QAction *action : main->ui->menuTools->actions()) {
 			// Perform actions on each QAction
 
-			if (action->text() == "WebSocket Server Settings")
+			if (action->text() == "MDC-DIPV2 WebSocket Settings")
 				action->triggered(true);
 		}
 	}
