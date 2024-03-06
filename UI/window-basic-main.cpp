@@ -5984,6 +5984,11 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 				&OBSBasic::ScreenshotScene);
 
 		//Akash MenuOptionadd 0403
+		popup.addAction(QTStr("Reset UI"), this,
+				&OBSBasic::DockSourceOnScreen);
+		popup.addAction(QTStr("MDC-DIPV2 Web Socket"), this,
+				&OBSBasic::WebSocketVisible);
+		//Akash MenuOptionadd 0403
 
 		popup.addSeparator();
 	}
@@ -8424,6 +8429,10 @@ void OBSBasic::on_previewDisabledWidget_customContextMenuRequested()
 
 	QAction *previewWindow = popup.addAction(QTStr("PreviewWindow"), this,
 						 &OBSBasic::OpenPreviewWindow);
+	//Akash MenuOptionadd 0403
+	popup.addAction(QTStr("Reset UI"), this, &OBSBasic::DockSourceOnScreen);
+	popup.addAction(QTStr("MDC-DIPV2 Web Socket"), this,
+			&OBSBasic::WebSocketVisible);
 	//Akash MenuOptionadd 0403
 
 	popup.addMenu(previewProjectorMain);
