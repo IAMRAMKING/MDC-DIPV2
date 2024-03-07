@@ -32,6 +32,17 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <iostream>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <string>
+
+#ifdef _WIN32
+#include <windows.h>
+#include <TlHelp32.h>
+#else
+#include <dirent.h>
+#include <cstring>
+#include <cctype>
+#endif
 
 #pragma comment(lib, "psapi.lib")
 
@@ -54,10 +65,45 @@ Config::Config()
 	SetDefaultsToGlobalStore();
 }
 
-
 //iamramking
+//int CountInstances(const std::wstring &processName)
+//{
+//	DWORD processes[1024];
+//	DWORD bytesReturned;
+//
+//	if (!EnumProcesses(processes, sizeof(processes), &bytesReturned)) {
+//		return -1; // Error
+//	}
+//
+//	DWORD numProcesses = bytesReturned / sizeof(DWORD);
+//	int count = 0;
+//
+//	for (DWORD i = 0; i < numProcesses; i++) {
+//		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processes[i]);
+//		if (hProcess != nullptr) {
+//			TCHAR szProcessName[MAX_PATH];
+//			if (GetProcessImageFileName(hProcess, szProcessName, MAX_PATH) != 0) {
+//				std::wstring processPath = szProcessName;
+//				size_t pos = processPath.find_last_of(L"\\");
+//				if (pos != std::wstring::npos) {
+//					std::wstring exeName = processPath.substr(pos + 1);
+//					if (_wcsicmp(exeName.c_str(), processName.c_str()) == 0) {
+//						count++;
+//					}
+//				}
+//			}
+//			CloseHandle(hProcess);
+//		}
+//	}
+//
+//	return count;
+//}
+
 int CountInstances(const std::wstring &processName)
 {
+	int count = 0;
+
+#ifdef _WIN32
 	DWORD processes[1024];
 	DWORD bytesReturned;
 
@@ -66,7 +112,6 @@ int CountInstances(const std::wstring &processName)
 	}
 
 	DWORD numProcesses = bytesReturned / sizeof(DWORD);
-	int count = 0;
 
 	for (DWORD i = 0; i < numProcesses; i++) {
 		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processes[i]);
@@ -85,9 +130,33 @@ int CountInstances(const std::wstring &processName)
 			CloseHandle(hProcess);
 		}
 	}
+#else
+	DIR *dir;
+	struct dirent *ent;
+	if ((dir = opendir("/proc")) != nullptr) {
+		while ((ent = readdir(dir)) != nullptr) {
+			if (ent->d_type == DT_DIR) {
+				std::wstring pid = ent->d_name;
+				if (std::all_of(pid.begin(), pid.end(), ::isdigit)) {
+					std::wstring path = L"/proc/" + pid + L"/comm";
+					std::wifstream cmdline(path);
+					if (cmdline.is_open()) {
+						std::wstring line;
+						std::getline(cmdline, line);
+						if (line == processName) {
+							count++;
+						}
+					}
+				}
+			}
+		}
+		closedir(dir);
+	}
+#endif
 
 	return count;
 }
+
 //iamramking
 
 void Config::Load()
@@ -100,7 +169,11 @@ void Config::Load()
 
 	//iamramking
 
-	  std::wstring processName = L"MDC-DIPV2.exe";
+#ifdef _WIN32
+	std::wstring processName = L"MDC-DIPV2.exe";
+#else
+	std::wstring processName = L"MDC-DIPV2";
+#endif
 	int count = CountInstances(processName);
 	if (count >= 0) {
 		ServerPort = 4455 + count - 1;
