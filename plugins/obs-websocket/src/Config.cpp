@@ -22,6 +22,18 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include "Config.h"
 #include "utils/Crypto.h"
 #include "utils/Platform.h"
+#include <QtNetwork>
+#include <QSharedMemory>
+#include <QApplication>
+#include <QMessageBox>
+#include <QProcess>
+#include <windows.h>
+#include <psapi.h>
+#include <iostream>
+#include <string>
+#include <vector>
+
+#pragma comment(lib, "psapi.lib")
 
 #define CONFIG_SECTION_NAME "OBSWebSocket"
 
@@ -42,6 +54,42 @@ Config::Config()
 	SetDefaultsToGlobalStore();
 }
 
+
+//iamramking
+int CountInstances(const std::wstring &processName)
+{
+	DWORD processes[1024];
+	DWORD bytesReturned;
+
+	if (!EnumProcesses(processes, sizeof(processes), &bytesReturned)) {
+		return -1; // Error
+	}
+
+	DWORD numProcesses = bytesReturned / sizeof(DWORD);
+	int count = 0;
+
+	for (DWORD i = 0; i < numProcesses; i++) {
+		HANDLE hProcess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, processes[i]);
+		if (hProcess != nullptr) {
+			TCHAR szProcessName[MAX_PATH];
+			if (GetProcessImageFileName(hProcess, szProcessName, MAX_PATH) != 0) {
+				std::wstring processPath = szProcessName;
+				size_t pos = processPath.find_last_of(L"\\");
+				if (pos != std::wstring::npos) {
+					std::wstring exeName = processPath.substr(pos + 1);
+					if (_wcsicmp(exeName.c_str(), processName.c_str()) == 0) {
+						count++;
+					}
+				}
+			}
+			CloseHandle(hProcess);
+		}
+	}
+
+	return count;
+}
+//iamramking
+
 void Config::Load()
 {
 	config_t *obsConfig = GetConfigStore();
@@ -50,10 +98,23 @@ void Config::Load()
 		return;
 	}
 
+	//iamramking
+
+	  std::wstring processName = L"MDC-DIPV2.exe";
+	int count = CountInstances(processName);
+	if (count >= 0) {
+		ServerPort = 4455 + count - 1;
+		//std::wcout << L"Number of instances running: " << count << std::endl;
+	} else {
+		std::cerr << "Error counting instances." << std::endl;
+	}
+
+	//iamramking
+
 	FirstLoad = config_get_bool(obsConfig, CONFIG_SECTION_NAME, PARAM_FIRSTLOAD);
 	ServerEnabled = config_get_bool(obsConfig, CONFIG_SECTION_NAME, PARAM_ENABLED);
 	AlertsEnabled = config_get_bool(obsConfig, CONFIG_SECTION_NAME, PARAM_ALERTS);
-	ServerPort = config_get_uint(obsConfig, CONFIG_SECTION_NAME, PARAM_PORT);
+	//ServerPort = config_get_uint(obsConfig, CONFIG_SECTION_NAME, PARAM_PORT); //iamramking
 	AuthRequired = config_get_bool(obsConfig, CONFIG_SECTION_NAME, PARAM_AUTHREQUIRED);
 	ServerPassword = config_get_string(obsConfig, CONFIG_SECTION_NAME, PARAM_PASSWORD);
 
