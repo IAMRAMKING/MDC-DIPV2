@@ -1230,6 +1230,8 @@ private slots:
 	//docking souceto specific area akash
 	void DockSourceOnScreen();
 	void WebSocketVisible();
+	OBSSceneItem GetSceneItemAtPoint(const QPoint &point);
+	//QRect GetItemRect(obs_sceneitem_t *sceneItem);
 	//docking souceto specific area akash
 	void RepairOldExtraDockName();
 	void RepairCustomExtraDockName();

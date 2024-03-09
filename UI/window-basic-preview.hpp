@@ -145,8 +145,8 @@ public:
 	void DrawOverflow();
 	void DrawSceneEditing();
 
-	inline void SetLocked(bool newLockedVal) { locked = newLockedVal; }
-	inline void ToggleLocked() { locked = !locked; }
+	inline void SetLocked(bool newLockedVal) { locked = true/*newLockedVal*/; }  //10032024 default lock
+	inline void ToggleLocked() { locked = true /*!locked*/; } //10032024 default lock
 	//inline void ToggleLocked()
 	//{
 	//	locked = /*!locked*/ true;

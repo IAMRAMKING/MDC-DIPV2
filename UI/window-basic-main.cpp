@@ -5486,6 +5486,7 @@ void OBSBasic::on_scenes_customContextMenuRequested(const QPoint &pos)
 			&OBSBasic::on_actionAddScene_triggered);
 
 	if (item) {
+		//09032024 Akash Menu option
 		QAction *copyFilters = new QAction(QTStr("Copy.Filters"), this);
 		copyFilters->setEnabled(false);
 		connect(copyFilters, &QAction::triggered, this,
@@ -5497,11 +5498,13 @@ void OBSBasic::on_scenes_customContextMenuRequested(const QPoint &pos)
 		connect(pasteFilters, &QAction::triggered, this,
 			&OBSBasic::ScenePasteFilters);
 
+
 		popup.addSeparator();
 		popup.addAction(QTStr("Duplicate"), this,
 				&OBSBasic::DuplicateSelectedScene);
 		popup.addAction(copyFilters);
 		popup.addAction(pasteFilters);
+		//09032024 Akash Menu option
 		popup.addSeparator();
 		popup.addAction(renameScene);
 		popup.addAction(ui->actionRemoveScene);
@@ -5956,19 +5959,24 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 	delete deinterlaceMenu;
 
 	if (preview) {
-		QAction *action = popup.addAction(
+		//09032024 Akash Menu option
+		/*QAction *action = popup.addAction(
 			QTStr("Basic.Main.PreviewConextMenu.Enable"), this,
 			&OBSBasic::TogglePreview);
 		action->setCheckable(true);
 		action->setChecked(
 			obs_display_enabled(ui->preview->GetDisplay()));
 		if (IsPreviewProgramMode())
-			action->setEnabled(false);
+			action->setEnabled(false);*/
+		//09032024 Akash Menu option
 
 		popup.addAction(ui->actionLockPreview);
+
 		popup.addMenu(ui->scalingMenu);
 
-		previewProjectorSource = new QMenu(QTStr("PreviewProjector"));
+		//09032024 Akash Menu option
+		/*previewProjectorSource =
+			new QMenu(QTStr("PreviewProjector"));
 		AddProjectorMenuMonitors(previewProjectorSource, this,
 					 &OBSBasic::OpenPreviewProjector);
 
@@ -5981,8 +5989,9 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 		popup.addAction(previewWindow);
 
 		popup.addAction(QTStr("Screenshot.Preview"), this,
-				&OBSBasic::ScreenshotScene);
-
+				&OBSBasic::ScreenshotScene);*/
+		//09032024 Akash Menu option
+		
 		//Akash MenuOptionadd 0403
 		popup.addAction(QTStr("Reset UI"), this,
 				&OBSBasic::DockSourceOnScreen);
@@ -5992,12 +6001,13 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 
 		popup.addSeparator();
 	}
-
+	
 	QPointer<QMenu> addSourceMenu = CreateAddSourcePopupMenu();
 	if (addSourceMenu)
 		popup.addMenu(addSourceMenu);
 
-	if (ui->sources->MultipleBaseSelected()) {
+	//Akash MenuOptionRemove 0403
+	/*if (ui->sources->MultipleBaseSelected()) {
 		popup.addSeparator();
 		popup.addAction(QTStr("Basic.Main.GroupItems"), ui->sources,
 				&SourceTree::GroupSelectedItems);
@@ -6008,17 +6018,23 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 				&SourceTree::UngroupSelectedGroups);
 	}
 
-	popup.addSeparator();
-	popup.addAction(ui->actionCopySource);
+	popup.addSeparator();*/
+	//Akash MenuOptionRemove 0403
+	//09032024 Akash Menu option
+	/*popup.addAction(ui->actionCopySource);
 	popup.addAction(ui->actionPasteRef);
-	popup.addAction(ui->actionPasteDup);
+	popup.addAction(ui->actionPasteDup);*/
+	//09032024 Akash Menu option
 	popup.addSeparator();
 
 	popup.addSeparator();
-	popup.addAction(ui->actionCopyFilters);
-	popup.addAction(ui->actionPasteFilters);
+	//09032024 Akash Menu option
+	//popup.addAction(ui->actionCopyFilters);
+	//popup.addAction(ui->actionPasteFilters);
+	//09032024 Akash Menu option
 	popup.addSeparator();
 
+	//10032024 Akash Menu option
 	if (idx != -1) {
 		if (addSourceMenu)
 			popup.addSeparator();
@@ -6040,9 +6056,10 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 		popup.addAction(ui->actionRemoveSource);
 		popup.addSeparator();
 
-		popup.addMenu(ui->orderMenu);
+		//popup.addMenu(ui->orderMenu);	//10032024 Akash Menu option
 
-		if (hasVideo)
+		//10032024 Akash Menu option
+		/*if (hasVideo)
 			popup.addMenu(ui->transformMenu);
 
 		popup.addSeparator();
@@ -6054,10 +6071,11 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 			actionHideMixer->setCheckable(true);
 			actionHideMixer->setChecked(SourceMixerHidden(source));
 			popup.addSeparator();
-		}
+		}*/
 
 		if (hasVideo) {
-			QAction *resizeOutput = popup.addAction(
+			//10032024 Akash Menu option
+			/*QAction *resizeOutput = popup.addAction(
 				QTStr("ResizeOutputSizeOfSource"), this,
 				&OBSBasic::ResizeOutputSizeOfSource);
 
@@ -6083,40 +6101,46 @@ void OBSBasic::CreateSourcePopupMenu(int idx, bool preview)
 					new QMenu(QTStr("Deinterlacing"));
 				popup.addMenu(AddDeinterlacingMenu(
 					deinterlaceMenu, source));
-			}
-
+			}*/
+			//10032024 Akash Menu option
 			popup.addSeparator();
 
-			popup.addMenu(CreateVisibilityTransitionMenu(true));
+			//10032024 Akash Menu option
+			/*popup.addMenu(CreateVisibilityTransitionMenu(true));
 			popup.addMenu(CreateVisibilityTransitionMenu(false));
-			popup.addSeparator();
+			popup.addSeparator();*/
 
 			sourceProjector = new QMenu(QTStr("SourceProjector"));
 			AddProjectorMenuMonitors(
 				sourceProjector, this,
 				&OBSBasic::OpenSourceProjector);
 			popup.addMenu(sourceProjector);
-			popup.addAction(QTStr("SourceWindow"), this,
+			//10032024 Akash Menu option
+			/*popup.addAction(QTStr("SourceWindow"), this,
 					&OBSBasic::OpenSourceWindow);
 
 			popup.addAction(QTStr("Screenshot.Source"), this,
-					&OBSBasic::ScreenshotSelectedSource);
+					&OBSBasic::ScreenshotSelectedSource);*/
+			//10032024 Akash Menu option
 		}
 
 		popup.addSeparator();
 
-		if (flags & OBS_SOURCE_INTERACTION)
+		//10032024 Akash Menu option
+		/*if (flags & OBS_SOURCE_INTERACTION)
 			popup.addAction(QTStr("Interact"), this,
 					&OBSBasic::on_actionInteract_triggered);
 
 		popup.addAction(QTStr("Filters"), this,
-				[&]() { OpenFilters(); });
+				[&]() { OpenFilters(); });*/
+		//10032024 Akash Menu option
+
 		QAction *action = popup.addAction(
 			QTStr("Properties"), this,
 			&OBSBasic::on_actionSourceProperties_triggered);
 		action->setEnabled(obs_source_configurable(source));
 	}
-
+	//10032024 Akash Menu option
 	popup.exec(QCursor::pos());
 }
 
@@ -6161,6 +6185,22 @@ static inline bool should_show_properties(obs_source_t *source, const char *id)
 
 void OBSBasic::AddSource(const char *id)
 {
+	int iSourcecount = 0, iTotalSourceCount = 16;
+	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+
+	while (sceneItem) {
+		
+		iSourcecount++;
+		sceneItem = ui->sources->Get(iSourcecount);
+	}
+
+	if (iSourcecount == iTotalSourceCount) {
+		QMessageBox::information(
+			nullptr, "Warning",
+			"Total source count reached to max value 16");
+		return;
+	}
+
 	if (id && *id) {
 		OBSBasicSourceSelect sourceSelect(this, id, undo_s);
 		sourceSelect.exec();
@@ -8417,7 +8457,8 @@ void OBSBasic::on_previewDisabledWidget_customContextMenuRequested()
 	QMenu popup(this);
 	delete previewProjectorMain;
 
-	QAction *action =
+	//09032024 Akash Menu option
+	/*QAction *action =
 		popup.addAction(QTStr("Basic.Main.PreviewConextMenu.Enable"),
 				this, &OBSBasic::TogglePreview);
 	action->setCheckable(true);
@@ -8428,15 +8469,18 @@ void OBSBasic::on_previewDisabledWidget_customContextMenuRequested()
 				 &OBSBasic::OpenPreviewProjector);
 
 	QAction *previewWindow = popup.addAction(QTStr("PreviewWindow"), this,
-						 &OBSBasic::OpenPreviewWindow);
+						 &OBSBasic::OpenPreviewWindow);*/
+	//09032024 Akash Menu option
 	//Akash MenuOptionadd 0403
 	popup.addAction(QTStr("Reset UI"), this, &OBSBasic::DockSourceOnScreen);
 	popup.addAction(QTStr("MDC-DIPV2 Web Socket"), this,
 			&OBSBasic::WebSocketVisible);
 	//Akash MenuOptionadd 0403
 
-	popup.addMenu(previewProjectorMain);
-	popup.addAction(previewWindow);
+	//09032024 Akash Menu option
+	/*popup.addMenu(previewProjectorMain);
+	popup.addAction(previewWindow);*/
+	//09032024 Akash Menu option
 	popup.exec(QCursor::pos());
 }
 
@@ -9635,6 +9679,8 @@ bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 			if (ui->dockWidgetContents_6->width() == 170) {
 				ui->sourcesDock->setFixedWidth(2);
 				ui->dockWidgetContents_6->setFixedWidth(2);
+
+			//	DockSourceOnScreen();
 			}
 		}
 	}
@@ -10512,145 +10558,7 @@ void OBSBasic::ResizeOutputSizeOfSource()
 //docking souceto specific area akash
 
 //auto resize of source akash
-//void OBSBasic::DockSourceOnScreen()
-//{
-//	int iSourcecount = 0,iTotalSourceCount = 0;
-//	int rows = 0, columns = 0;
-//	int spacing = 10; // Set your desired spacing value
-//
-//	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
-//
-//	while (sceneItem) {
-//		iTotalSourceCount++;
-//		iSourcecount++;
-//		sceneItem = ui->sources->Get(iSourcecount);
-//	}
-//
-//	if (iTotalSourceCount < 3)
-//	{
-//	   rows = 2;
-//	   columns = 1;
-//
-//	} else if ((3 < iTotalSourceCount) && (iTotalSourceCount < 5)) {
-//
-//	   rows = 2;
-//	   columns = 2;
-//
-//	} else if ((5 < iTotalSourceCount) && (iTotalSourceCount < 9)) {
-//
-//	   rows = 3;
-//	   columns = 3;
-//
-//	} else if ((9 < iTotalSourceCount) && (iTotalSourceCount < 17)) {
-//
-//	   rows = 4;
-//	   columns = 4;
-//
-//	}
-//
-//	// Get the size of the preview screen
-//	QSize previewSize(ui->preview->width(), ui->preview->height());
-//
-//	int cellWidth = previewSize.width() / columns;
-//	int cellHeight = previewSize.height() / rows;
-//
-//	cellWidth = cellWidth - spacing;
-//	cellHeight = cellHeight - spacing;
-//
-//	// Initialize variables to keep track of the current row and column
-//	int currentRow = 0;
-//	int currentColumn = 0;
-//
-//	// Get the current scene item
-//	iSourcecount = 0;
-//	/*obs_sceneitem_t **/sceneItem = ui->sources->Get(iSourcecount);
-//	int iColSpacing = 0;
-//	int iRowSpacing = 0;
-//
-//	int x = 0;
-//	int y = 0;
-//	int width = 0;
-//	int height = 0;
-//
-//	while (sceneItem) {
-//
-//	   iColSpacing = spacing;
-//	   if (currentRow == 1) {
-//			iRowSpacing = spacing * (2);
-//	   } else if (currentRow == 2) {
-//			iRowSpacing = spacing * (3);
-//	   } else if (currentRow == 3) {
-//			iRowSpacing = spacing * (4);
-//	   }
-//
-//	   if (currentRow == 0) {
-//		QRect targetRect(currentColumn * (cellWidth + spacing)+
-//				    (spacing * currentColumn),
-//					 currentRow * (cellHeight),
-//				cellWidth, cellHeight);
-//
-//		// Calculate position and size based on the target rect
-//		x = targetRect.x();
-//		y = targetRect.y();
-//		width = targetRect.width();
-//		height = targetRect.height();
-//	   } else if( currentRow == 3){
-//		QRect targetRect(currentColumn * (cellWidth + spacing) +
-//					 (spacing * currentColumn),
-//				 currentRow * (cellHeight + iRowSpacing) +
-//					 (iRowSpacing ),
-//				 cellWidth, cellHeight);
-//
-//		// Calculate position and size based on the target rect
-//		x = targetRect.x();
-//		y = targetRect.y();
-//		width = targetRect.width();
-//		height = targetRect.height();
-//	   }
-//	   else {
-//		QRect targetRect(currentColumn * (cellWidth + spacing) +
-//					 (spacing * currentColumn),
-//				 currentRow * (cellHeight + iRowSpacing) +
-//					 (iRowSpacing + 10),
-//				 cellWidth, cellHeight);
-//
-//		// Calculate position and size based on the target rect
-//		x = targetRect.x();
-//		y = targetRect.y();
-//		width = targetRect.width();
-//		height = targetRect.height();
-//	   }
-//		// // Calculate position and size based on the target rect
-//		//int x = targetRect.x();
-//		//int y = targetRect.y();
-//		//int width = targetRect.width();
-//		//int height = targetRect.height();
-//
-//		vec2 pos;
-//		pos.x = x;
-//		pos.y = y;
-//
-//		// Update source position
-//		obs_sceneitem_set_pos(sceneItem, &pos);
-//
-//		vec2 size;
-//		size.x = static_cast<float>(width);
-//		size.y = static_cast<float>(height);
-//
-//		// Update source size
-//		obs_sceneitem_set_bounds(sceneItem, &size);
-//
-//		// Update currentRow and currentColumn for the next source
-//		currentColumn++;
-//		if (currentColumn >= columns) {
-//			currentColumn = 0;
-//			currentRow++;
-//		}
-//
-//		iSourcecount++;
-//		sceneItem = ui->sources->Get(iSourcecount);
-//	}
-//}
+
 void OBSBasic::WebSocketVisible()
 {
 	for (QAction *action : ui->menuTools->actions()) {
@@ -10663,48 +10571,153 @@ void OBSBasic::WebSocketVisible()
 }
 
 
+//void OBSBasic::DockSourceOnScreen()
+//{
+//	
+//	// Get the size of the preview screen
+//	QSize previewSize(ui->preview->width(), ui->preview->height());
+//
+//	int iSourcecount = 0, iTotalSourceCount = 0;
+//	int rows = 0, columns = 0;
+//	int spacing = 10; // Set your desired spacing value
+//	
+//	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+//	
+//	while (sceneItem) {
+//			iTotalSourceCount++;
+//			iSourcecount++;
+//			sceneItem = ui->sources->Get(iSourcecount);
+//	}
+//	
+//	if (iTotalSourceCount < 3)
+//	{
+//		   rows = 2;
+//		   columns = 2;
+//	
+//	} else if ((3 <= iTotalSourceCount) && (iTotalSourceCount < 5)) {
+//	
+//		   rows = 2;
+//		   columns = 2;
+//	
+//	} else if ((5 <= iTotalSourceCount) && (iTotalSourceCount < 9)) {
+//	
+//		rows = 3;
+//		columns = 3;
+//	
+//	} else if ((9 <= iTotalSourceCount) /*&& (iTotalSourceCount < 17)*/) {
+//	
+//		rows = 4;
+//		columns = 4;
+//	
+//	}
+//
+//	// Calculate the width and height of each grid cell
+//	int cellWidth = (previewSize.width() - (columns + 1) * spacing) / columns;
+//	int cellHeight = (previewSize.height() - (rows + 1) * spacing) / rows;
+//
+//	// Initialize variables to keep track of the current row and column
+//	int currentRow = 0;
+//	int currentColumn = 0;
+//
+//	// Get the current scene item
+//	iSourcecount = 0;
+//	sceneItem = ui->sources->Get(iSourcecount);
+//
+//	while (sceneItem) {
+//		QRect targetRect(currentColumn * (cellWidth + spacing) +
+//					 spacing,
+//				 currentRow * (cellHeight + spacing) + spacing,
+//				 cellWidth, cellHeight);
+//
+//		// Calculate position and size based on the target rect
+//		int x = targetRect.x();
+//		int y = targetRect.y();
+//		int width = targetRect.width();
+//		int height = targetRect.height();
+//
+//		vec2 pos;
+//		pos.x = x;
+//		pos.y = y;
+//
+//		// Update source position
+//		obs_sceneitem_set_pos(sceneItem, &pos);
+//
+//		vec2 size;
+//		size.x = static_cast<float>(width);
+//		size.y = static_cast<float>(height);
+//
+//
+//		// Update source size
+//		obs_sceneitem_set_bounds(sceneItem, &size);
+//
+//		obs_source_t *source = obs_sceneitem_get_source(sceneItem);
+//
+//		uint32_t source_cx = obs_source_get_width(source);
+//		uint32_t source_cy = obs_source_get_height(source);
+//
+//		/* if the source's internal size has been set to 0 for whatever reason
+//		 * while resizing, do not update transform, otherwise source will be
+//		 * stuck invisible until a complete transform reset */
+//		if (!source_cx || !source_cy)
+//			return;
+//
+//		vec2 baseSize;
+//		vec2_set(&baseSize, float(source_cx), float(source_cy));
+//		vec2_div(&size, &size, &baseSize);
+//
+//		obs_sceneitem_set_scale(sceneItem, &size);
+//
+//		// Update currentRow and currentColumn for the next source
+//		currentColumn++;
+//		if (currentColumn >= columns) {
+//			currentColumn = 0;
+//			currentRow++;
+//		}
+//
+//		iSourcecount++;
+//		sceneItem = ui->sources->Get(iSourcecount);
+//	}
+//}
+
 void OBSBasic::DockSourceOnScreen()
 {
-	
 	// Get the size of the preview screen
 	QSize previewSize(ui->preview->width(), ui->preview->height());
 
 	int iSourcecount = 0, iTotalSourceCount = 0;
 	int rows = 0, columns = 0;
 	int spacing = 10; // Set your desired spacing value
-	
+
 	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
-	
+
 	while (sceneItem) {
+		// Check if the source is visible
+		if (obs_sceneitem_visible(sceneItem)) {
 			iTotalSourceCount++;
-			iSourcecount++;
-			sceneItem = ui->sources->Get(iSourcecount);
+		}
+
+		iSourcecount++;
+		sceneItem = ui->sources->Get(iSourcecount);
 	}
-	
-	if (iTotalSourceCount < 3)
-	{
-		   rows = 2;
-		   columns = 2;
-	
+
+	// Set rows and columns based on the visible sources count
+	if (iTotalSourceCount < 3) {
+		rows = 2;
+		columns = 2;
 	} else if ((3 <= iTotalSourceCount) && (iTotalSourceCount < 5)) {
-	
-		   rows = 2;
-		   columns = 2;
-	
+		rows = 2;
+		columns = 2;
 	} else if ((5 <= iTotalSourceCount) && (iTotalSourceCount < 9)) {
-	
 		rows = 3;
 		columns = 3;
-	
-	} else if ((9 <= iTotalSourceCount) && (iTotalSourceCount < 17)) {
-	
+	} else if ((9 <= iTotalSourceCount) /*&& (iTotalSourceCount < 17)*/) {
 		rows = 4;
 		columns = 4;
-	
 	}
 
 	// Calculate the width and height of each grid cell
-	int cellWidth = (previewSize.width() - (columns + 1) * spacing) / columns;
+	int cellWidth =
+		(previewSize.width() - (columns + 1) * spacing) / columns;
 	int cellHeight = (previewSize.height() - (rows + 1) * spacing) / rows;
 
 	// Initialize variables to keep track of the current row and column
@@ -10716,54 +10729,57 @@ void OBSBasic::DockSourceOnScreen()
 	sceneItem = ui->sources->Get(iSourcecount);
 
 	while (sceneItem) {
-		QRect targetRect(currentColumn * (cellWidth + spacing) +
-					 spacing,
-				 currentRow * (cellHeight + spacing) + spacing,
-				 cellWidth, cellHeight);
+		// Check if the source is visible
+		if (obs_sceneitem_visible(sceneItem)) {
+			QRect targetRect(
+				currentColumn * (cellWidth + spacing) + spacing,
+				currentRow * (cellHeight + spacing) + spacing,
+				cellWidth, cellHeight);
 
-		// Calculate position and size based on the target rect
-		int x = targetRect.x();
-		int y = targetRect.y();
-		int width = targetRect.width();
-		int height = targetRect.height();
+			// Calculate position and size based on the target rect
+			int x = targetRect.x();
+			int y = targetRect.y();
+			int width = targetRect.width();
+			int height = targetRect.height();
 
-		vec2 pos;
-		pos.x = x;
-		pos.y = y;
+			vec2 pos;
+			pos.x = x;
+			pos.y = y;
 
-		// Update source position
-		obs_sceneitem_set_pos(sceneItem, &pos);
+			// Update source position
+			obs_sceneitem_set_pos(sceneItem, &pos);
 
-		vec2 size;
-		size.x = static_cast<float>(width);
-		size.y = static_cast<float>(height);
+			vec2 size;
+			size.x = static_cast<float>(width);
+			size.y = static_cast<float>(height);
 
+			// Update source size
+			obs_sceneitem_set_bounds(sceneItem, &size);
 
-		// Update source size
-		obs_sceneitem_set_bounds(sceneItem, &size);
+			obs_source_t *source =
+				obs_sceneitem_get_source(sceneItem);
 
-		obs_source_t *source = obs_sceneitem_get_source(sceneItem);
+			uint32_t source_cx = obs_source_get_width(source);
+			uint32_t source_cy = obs_source_get_height(source);
 
-		uint32_t source_cx = obs_source_get_width(source);
-		uint32_t source_cy = obs_source_get_height(source);
+			/* if the source's internal size has been set to 0 for whatever reason
+             * while resizing, do not update transform, otherwise source will be
+             * stuck invisible until a complete transform reset */
+			if (!source_cx || !source_cy)
+				return;
 
-		/* if the source's internal size has been set to 0 for whatever reason
-		 * while resizing, do not update transform, otherwise source will be
-		 * stuck invisible until a complete transform reset */
-		if (!source_cx || !source_cy)
-			return;
+			vec2 baseSize;
+			vec2_set(&baseSize, float(source_cx), float(source_cy));
+			vec2_div(&size, &size, &baseSize);
 
-		vec2 baseSize;
-		vec2_set(&baseSize, float(source_cx), float(source_cy));
-		vec2_div(&size, &size, &baseSize);
+			obs_sceneitem_set_scale(sceneItem, &size);
 
-		obs_sceneitem_set_scale(sceneItem, &size);
-
-		// Update currentRow and currentColumn for the next source
-		currentColumn++;
-		if (currentColumn >= columns) {
-			currentColumn = 0;
-			currentRow++;
+			// Update currentRow and currentColumn for the next source
+			currentColumn++;
+			if (currentColumn >= columns) {
+				currentColumn = 0;
+				currentRow++;
+			}
 		}
 
 		iSourcecount++;
@@ -10771,32 +10787,43 @@ void OBSBasic::DockSourceOnScreen()
 	}
 }
 
-//void setSceneItemBoxProperties(obs_sceneitem_t *sceneItem, const struct vec2 *newBoxScale, const struct vec3 *translation)
-//{
-//    // Set a new box scale
-//    if (newBoxScale)
-//    {
-//       // obs_sceneitem_set_box_scale(sceneItem, newBoxScale);
-//    }
-//
-//    // Set a new box transform (translation)
-//    if (translation)
-//    {
-//        struct matrix4 currentBoxTransform;
-//        obs_sceneitem_get_box_transform(sceneItem, &currentBoxTransform);
-//
-//        matrix4_translate3f(&currentBoxTransform, &currentBoxTransform, translation->x, translation->y, translation->z);
-//      //  obs_sceneitem_set_box_transform(sceneItem, &currentBoxTransform);
-//    }
-//}
-//
-//void obs_sceneitem_SetBoxScale_from_bound(obs_sceneitem_t *item, const struct vec2 *bounds)
-//{
-//	if (item) {
-//		item->box_scale.x = bounds->x;
-//		item->box_scale.y = bounds->y;
-//	}
-//}
+OBSSceneItem OBSBasic::GetSceneItemAtPoint(const QPoint &point)
+{
+	int iSourcecount = 0;
+
+	// Iterate through scene items
+	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+
+	while (sceneItem) {
+		
+		// Get the position and size of the scene item
+		vec2 position, size;
+		obs_sceneitem_get_pos(sceneItem, &position);
+		//obs_sceneitem_get_scale(sceneItem, &size);
+		obs_sceneitem_get_bounds(sceneItem, &size);
+		// Assuming size is a vec2 representing width and height
+		int width = static_cast<int>(size.x);
+		int height = static_cast<int>(size.y);
+
+		// Create a QRect for the item
+		QRect itemRect(position.x, position.y, width, height);
+
+		// Check if the point is inside the item's bounding box
+		if (itemRect.contains(point)) {
+			return sceneItem;
+		}
+
+		iSourcecount++;
+
+		// Move on to the next scene item
+		sceneItem = ui->sources->Get(iSourcecount);
+
+	}
+
+	// If no matching scene item is found, return nullptr
+	return nullptr;
+}
+
 //docking souceto specific area akash
 
 
