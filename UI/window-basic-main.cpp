@@ -10787,41 +10787,70 @@ void OBSBasic::DockSourceOnScreen()
 	}
 }
 
+//OBSSceneItem OBSBasic::GetSceneItemAtPoint(const QPoint &point)
+//{
+//	int iSourcecount = 0;
+//
+//	// Iterate through scene items
+//	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
+//
+//	while (sceneItem) {
+//		
+//		// Get the position and size of the scene item
+//		vec2 position, size;
+//		obs_sceneitem_get_pos(sceneItem, &position);
+//		//obs_sceneitem_get_scale(sceneItem, &size);
+//		obs_sceneitem_get_bounds(sceneItem, &size);
+//		// Assuming size is a vec2 representing width and height
+//		int width = static_cast<int>(size.x);
+//		int height = static_cast<int>(size.y);
+//
+//		// Create a QRect for the item
+//		QRect itemRect(position.x, position.y, width, height);
+//
+//		// Check if the point is inside the item's bounding box
+//		if (itemRect.contains(point)) {
+//			return sceneItem;
+//		}
+//
+//		iSourcecount++;
+//
+//		// Move on to the next scene item
+//		sceneItem = ui->sources->Get(iSourcecount);
+//
+//	}
+//
+//	// If no matching scene item is found, return nullptr
+//	return nullptr;
+//}
+
 OBSSceneItem OBSBasic::GetSceneItemAtPoint(const QPoint &point)
 {
+	// Iterate through the scene items and check if the point is within their bounding boxes
 	int iSourcecount = 0;
-
-	// Iterate through scene items
 	obs_sceneitem_t *sceneItem = ui->sources->Get(iSourcecount);
 
 	while (sceneItem) {
-		
-		// Get the position and size of the scene item
-		vec2 position, size;
-		obs_sceneitem_get_pos(sceneItem, &position);
-		//obs_sceneitem_get_scale(sceneItem, &size);
+		//iSourcecount++;
+		sceneItem = ui->sources->Get(iSourcecount);
+		vec2 size;
+		vec2 pos;
+
+		// Update source position
+		obs_sceneitem_get_pos(sceneItem, &pos);
+		// Update source size
 		obs_sceneitem_get_bounds(sceneItem, &size);
-		// Assuming size is a vec2 representing width and height
-		int width = static_cast<int>(size.x);
-		int height = static_cast<int>(size.y);
 
-		// Create a QRect for the item
-		QRect itemRect(position.x, position.y, width, height);
+		QRect itemRect(pos.x, pos.y, size.x, size.y);
 
-		// Check if the point is inside the item's bounding box
 		if (itemRect.contains(point)) {
 			return sceneItem;
 		}
 
 		iSourcecount++;
-
-		// Move on to the next scene item
-		sceneItem = ui->sources->Get(iSourcecount);
-
 	}
 
-	// If no matching scene item is found, return nullptr
-	return nullptr;
+	return nullptr; // No item found at the specified point
 }
 
 //docking souceto specific area akash
