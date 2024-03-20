@@ -6530,6 +6530,8 @@ void OBSBasic::MoveSceneItem(enum obs_order_movement movement,
 	OBSData redo_data = BackupScene(scene, &sources);
 	CreateSceneUndoRedoAction(action_name.arg(source_name, scene_name),
 				  undo_data, redo_data);
+
+	DockSourceOnScreen(); //20032024 akash reset ui on Move up down
 }
 
 void OBSBasic::on_actionSourceUp_triggered()
