@@ -2320,7 +2320,7 @@ void OBSBasic::OBSInit()
 		config_save_safe(App()->GlobalConfig(), "tmp", nullptr);
 	}
 #endif
-	TimedCheckForUpdates();
+	//TimedCheckForUpdates(); //iamramking //Stopped Updation
 
 	ToggleMixerLayout(config_get_bool(App()->GlobalConfig(), "BasicWindow",
 					  "VerticalVolControl"));

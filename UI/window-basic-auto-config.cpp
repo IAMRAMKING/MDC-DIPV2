@@ -874,6 +874,7 @@ void AutoConfigStreamPage::UpdateCompleted()
 
 AutoConfig::AutoConfig(QWidget *parent) : QWizard(parent)
 {
+	//iamramking //to stop auto  configuration
 	EnableThreadedMessageBoxes(true);
 
 	calldata_t cd = {0};
