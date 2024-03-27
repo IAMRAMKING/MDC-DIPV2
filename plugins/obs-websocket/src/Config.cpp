@@ -27,7 +27,9 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <QApplication>
 #include <QMessageBox>
 #include <QProcess>
-#include <windows.h>
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <psapi.h>
 #include <iostream>
 #include <string>
