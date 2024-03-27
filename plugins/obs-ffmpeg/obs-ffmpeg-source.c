@@ -855,7 +855,7 @@ static obs_missing_files_t *ffmpeg_source_missingfiles(void *data)
 }
 
 struct obs_source_info ffmpeg_source = {
-	.id = "ffmpeg_source",
+	.id = "ffmpeg_source" /*,
 	.type = OBS_SOURCE_TYPE_INPUT,
 	.output_flags = OBS_SOURCE_ASYNC_VIDEO | OBS_SOURCE_AUDIO |
 			OBS_SOURCE_DO_NOT_DUPLICATE |
@@ -877,5 +877,5 @@ struct obs_source_info ffmpeg_source = {
 	.media_get_duration = ffmpeg_source_get_duration,
 	.media_get_time = ffmpeg_source_get_time,
 	.media_set_time = ffmpeg_source_set_time,
-	.media_get_state = ffmpeg_source_get_state,
+	.media_get_state = ffmpeg_source_get_state,*/
 };
