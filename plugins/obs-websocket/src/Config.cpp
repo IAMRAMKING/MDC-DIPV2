@@ -18,7 +18,7 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 */
 
 #include <obs-frontend-api.h>
-
+//#include <obs-frontend-api.h> commented by yug sir
 #include "Config.h"
 #include "utils/Crypto.h"
 #include "utils/Platform.h"
@@ -28,25 +28,21 @@ with this program. If not, see <https://www.gnu.org/licenses/>
 #include <QMessageBox>
 #include <QProcess>
 #ifdef _WIN32
-#include <Windows.h>
-#endif
+#include <windows.h>
 #include <psapi.h>
+#endif
 #include <iostream>
 #include <string>
 #include <vector>
-#include <iostream>
-#include <string>
-
-#ifdef _WIN32
-#include <windows.h>
-#include <TlHelp32.h>
-#else
+#ifndef _WIN32
 #include <dirent.h>
 #include <cstring>
-#include <cctype>
+#include <fstream>
+#include <locale>
+#include <codecvt>
 #endif
 
-#pragma comment(lib, "psapi.lib")
+
 
 #define CONFIG_SECTION_NAME "OBSWebSocket"
 
@@ -66,6 +62,7 @@ Config::Config()
 {
 	SetDefaultsToGlobalStore();
 }
+
 
 //iamramking
 //int CountInstances(const std::wstring &processName)
@@ -133,32 +130,38 @@ int CountInstances(const std::wstring &processName)
 		}
 	}
 #else
-	DIR *dir;
-	struct dirent *ent;
-	if ((dir = opendir("/proc")) != nullptr) {
-		while ((ent = readdir(dir)) != nullptr) {
-			if (ent->d_type == DT_DIR) {
-				std::wstring pid = ent->d_name;
-				if (std::all_of(pid.begin(), pid.end(), ::isdigit)) {
-					std::wstring path = L"/proc/" + pid + L"/comm";
-					std::wifstream cmdline(path);
-					if (cmdline.is_open()) {
-						std::wstring line;
-						std::getline(cmdline, line);
-						if (line == processName) {
-							count++;
-						}
-					}
-				}
-			}
-		}
-		closedir(dir);
-	}
+    
+DIR *dir;
+struct dirent *ent;
+if ((dir = opendir("/proc")) != nullptr) {
+    while ((ent = readdir(dir)) != nullptr) {
+        if (ent->d_type == DT_DIR) {
+            // Directly use ent->d_name which is a narrow string
+            std::string pid = ent->d_name;
+            // Check if the pid directory name is all digits
+            if (std::all_of(pid.begin(), pid.end(), ::isdigit)) {
+                // Construct the narrow string path
+                std::string path = "/proc/" + pid + "/comm";
+                // Use std::ifstream with the narrow string path
+                std::ifstream cmdline(path);
+                if (cmdline.is_open()) {
+                    std::string line;
+                    std::getline(cmdline, line);
+                    // Convert processName to a narrow string for comparison
+                    std::string narrowProcessName(processName.begin(), processName.end());
+                    if (line == narrowProcessName) {
+                        count++;
+                    }
+                }
+            }
+        }
+    }
+    closedir(dir);
+}
 #endif
 
-	return count;
+    return count;
 }
-
 //iamramking
 
 void Config::Load()

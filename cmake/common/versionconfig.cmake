@@ -35,8 +35,8 @@ elseif(_obs_version MATCHES "[0-9]+\\.[0-9]+\\.[0-9]+-beta[0-9]+")
 endif()
 
 list(GET _obs_version_canonical 0 OBS_VERSION_MAJOR)
-list(GET _obs_version_canonical 1 OBS_VERSION_MINOR)
-list(GET _obs_version_canonical 2 OBS_VERSION_PATCH)
+list(GET _obs_version_canonical 0 OBS_VERSION_MINOR)
+list(GET _obs_version_canonical 0 OBS_VERSION_PATCH)
 
 set(OBS_RELEASE_CANDIDATE ${_obs_release_candidate})
 set(OBS_BETA ${_obs_beta})

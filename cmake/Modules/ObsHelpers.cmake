@@ -268,7 +268,7 @@ function(export_target target)
 
   write_basic_package_version_file(
     ${CMAKE_CURRENT_BINARY_DIR}/${target}ConfigVersion.cmake
-    VERSION ${OBS_VERSION_CANONICAL}
+    VERSION 2.0.0
     COMPATIBILITY SameMajorVersion)
 
   export(

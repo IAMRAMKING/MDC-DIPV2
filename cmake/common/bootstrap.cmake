@@ -18,10 +18,10 @@ endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS TRUE)
 
 # Set default global project variables
-set(OBS_COMPANY_NAME "OBS Project")
-set(OBS_PRODUCT_NAME "OBS Studio")
-set(OBS_WEBSITE "https://www.obsproject.com")
-set(OBS_COMMENTS "Free and open source software for video recording and live streaming")
+set(OBS_COMPANY_NAME "DIP-BEL")
+set(OBS_PRODUCT_NAME "MDC DIPV2")
+set(OBS_WEBSITE "#")
+set(OBS_COMMENTS " software for video recording and live streaming")
 set(OBS_LEGAL_COPYRIGHT "(C) Lain Bailey")
 set(OBS_CMAKE_VERSION 3.0.0)
 
@@ -43,7 +43,7 @@ if(NOT CMAKE_GENERATOR MATCHES "(Xcode|Visual Studio .+)")
   if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE
         "RelWithDebInfo"
-        CACHE STRING "OBS build type [Release, RelWithDebInfo, Debug, MinSizeRel]" FORCE)
+        CACHE STRING "MDC build type [Release, RelWithDebInfo, Debug, MinSizeRel]" FORCE)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS Release RelWithDebInfo Debug MinSizeRel)
   endif()
 endif()

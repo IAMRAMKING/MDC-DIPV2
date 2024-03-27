@@ -1289,7 +1289,7 @@ bool OBSApp::InitTheme()
 	const char *themeName =
 		config_get_string(globalConfig, "General", "CurrentTheme3");
 
-	themeName = "light"; //iamramking
+	themeName = "Light"; //iamramking
 	if (!themeName)
 		themeName = DEFAULT_THEME;
 

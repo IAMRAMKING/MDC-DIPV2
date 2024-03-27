@@ -56,9 +56,9 @@ primary_domain = 'c'
 master_doc = 'index'
 
 # General information about the project.
-project = 'OBS Studio'
-copyright = '2017-2022, Lain Bailey'
-author = 'Lain Bailey'
+project = 'MDC DIPV2'
+copyright = '2017-2022, Orange Infotech'
+author = 'Orange Infotech'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

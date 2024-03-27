@@ -7,15 +7,15 @@ BEGIN
   BEGIN
     BLOCK "040904B0"
     BEGIN
-      VALUE "CompanyName", "OBS"
-      VALUE "FileDescription", "OBS Studio"
+      VALUE "CompanyName", "BEL"
+      VALUE "FileDescription", "MDC DIPV2"
       VALUE "FileVersion", "${UI_VERSION}"
       VALUE "InternalName", "obs"
       VALUE "OriginalFilename", "obs"
-      VALUE "ProductName", "OBS Studio"
+      VALUE "ProductName", "MDC DIPV2"
       VALUE "ProductVersion", "${UI_VERSION}"
-      VALUE "Comments", "Free and open source software for video recording and live streaming"
-      VALUE "LegalCopyright", "(C) Lain Bailey"
+      VALUE "Comments", "software for video recording and live streaming"
+      VALUE "LegalCopyright", "(C) Orange Infotech"
     END
   END
 

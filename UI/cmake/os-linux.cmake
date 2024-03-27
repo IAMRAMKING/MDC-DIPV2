@@ -30,21 +30,21 @@ install(FILES "${CMAKE_CURRENT_BINARY_DIR}/com.obsproject.Studio.appdata.xml"
 install(FILES cmake/linux/com.obsproject.Studio.desktop DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/applications")
 
 install(
-  FILES cmake/linux/icons/obs-logo-128.png
+  FILES cmake/linux/icons/mdc-logo-128.png
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/128x128/apps"
   RENAME com.obsproject.Studio.png)
 
 install(
-  FILES cmake/linux/icons/obs-logo-256.png
+  FILES cmake/linux/icons/mdc-logo-256.png
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/256x256/apps"
   RENAME com.obsproject.Studio.png)
 
 install(
-  FILES cmake/linux/icons/obs-logo-512.png
+  FILES cmake/linux/icons/mdc-logo-512.png
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/512x512/apps"
   RENAME com.obsproject.Studio.png)
 
 install(
-  FILES cmake/linux/icons/obs-logo-scalable.svg
+  FILES cmake/linux/icons/mdc-logo-scalable.svg
   DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps"
   RENAME com.obsproject.Studio.svg)

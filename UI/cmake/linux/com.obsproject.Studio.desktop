@@ -1,8 +1,8 @@
 [Desktop Entry]
 Version=1.0
-Name=OBS Studio
+Name=MDC DIP
 GenericName=Streaming/Recording Software
-Comment=Free and Open Source Streaming/Recording Software
+Comment=Streaming/Recording Software
 Exec=obs
 Icon=com.obsproject.Studio
 Terminal=false
