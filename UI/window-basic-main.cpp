@@ -6269,7 +6269,7 @@ QMenu *OBSBasic::CreateAddSourcePopupMenu()
 		foundValues = true;
 	}
 
-	addSource(popup, "scene", Str("Basic.Scene"));
+	//addSource(popup, "scene", Str("Basic.Scene"));
 
 	popup->addSeparator();
 	QAction *addGroup = new QAction(QTStr("Group"), this);
@@ -6289,7 +6289,7 @@ QMenu *OBSBasic::CreateAddSourcePopupMenu()
 
 	} else if (foundDeprecated) {
 		popup->addSeparator();
-		popup->addMenu(deprecated);
+		//popup->addMenu(deprecated);
 	}
 
 	return popup;
