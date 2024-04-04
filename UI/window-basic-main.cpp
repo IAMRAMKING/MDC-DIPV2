@@ -9667,10 +9667,14 @@ void OBSBasic::on_resetDocks_triggered(bool force)
 
 bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 {
+	QMessageBox::warning(NULL, "Tools Event",
+			     "Event Started"); // MessageBox1 
 	//iamramking
 	//iamramking
 	if (obj == ui->dockWidgetContents_6) {
 		if (event->type() == QEvent::Enter) {
+			QMessageBox::warning(NULL, "Tools Event",
+					     "Mouse Inside Tool Items Area"); // MessageBox2
 			if (ui->dockWidgetContents_6->width() == 2) {
 				ui->sourcesDock->setFixedWidth(170);
 				ui->dockWidgetContents_6->setFixedWidth(170);
@@ -9678,6 +9682,8 @@ bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 		}
 	} else if (obj == ui->sourcesDock) {
 		if (event->type() == QEvent::MouseButtonDblClick) {
+			QMessageBox::warning(NULL, "Tools Event",
+					     "MouseInside Tool Windows Area"); // MessageBox3
 			if (ui->dockWidgetContents_6->width() == 170) {
 				ui->sourcesDock->setFixedWidth(2);
 				ui->dockWidgetContents_6->setFixedWidth(2);
