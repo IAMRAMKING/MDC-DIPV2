@@ -373,11 +373,6 @@ struct OBSStudioAPI : obs_frontend_callbacks {
 		main->ui->scenesDock->close();
 		main->ui->dockWidgetContents_2->setHidden(true);
 
-		//Source
-		/*main->ui->sourcesDock->setParent(nullptr);   //remove sources commented akash  
-		main->ui->sourcesDock->close();
-		main->ui->dockWidgetContents_6->setHidden(true); */ //iamramking
-
 		//Mixer
 		main->ui->mixerDock->setParent(nullptr);
 		main->ui->mixerDock->close();
