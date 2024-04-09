@@ -9667,8 +9667,7 @@ void OBSBasic::on_resetDocks_triggered(bool force)
 
 bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 {
-	QMessageBox::warning(NULL, "Tools Event",
-			     "Event Started"); // MessageBox1 
+	//QMessageBox::warning(NULL, "Tools Event","Event Started"); // MessageBox1 
 	//iamramking
 	//iamramking
 	if (obj == ui->dockWidgetContents_6) {
