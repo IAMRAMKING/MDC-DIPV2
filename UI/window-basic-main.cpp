@@ -9672,8 +9672,8 @@ bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 	//iamramking
 	if (obj == ui->dockWidgetContents_6) {
 		if (event->type() == QEvent::Enter) {
-			QMessageBox::warning(NULL, "Tools Event",
-					     "Mouse Inside Tool Items Area"); // MessageBox2
+			/*QMessageBox::warning(NULL, "Tools Event",
+					     "Mouse Inside Tool Items Area");*/ // MessageBox2
 			if (ui->dockWidgetContents_6->width() == 2) {
 				ui->sourcesDock->setFixedWidth(170);
 				ui->dockWidgetContents_6->setFixedWidth(170);
@@ -9681,8 +9681,8 @@ bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 		}
 	} else if (obj == ui->sourcesDock) {
 		if (event->type() == QEvent::MouseButtonDblClick) {
-			QMessageBox::warning(NULL, "Tools Event",
-					     "MouseInside Tool Windows Area"); // MessageBox3
+			/*QMessageBox::warning(NULL, "Tools Event",
+					     "MouseInside Tool Windows Area");*/ // MessageBox3
 			if (ui->dockWidgetContents_6->width() == 170) {
 				ui->sourcesDock->setFixedWidth(2);
 				ui->dockWidgetContents_6->setFixedWidth(2);
@@ -9691,23 +9691,6 @@ bool OBSBasic::eventFilter(QObject *obj, QEvent *event)
 			}
 		}
 	}
-	//else if (obj == ui->previewLayout) {
-
-	//	if (event->type() == QEvent::KeyPress) {
-	//		//for (QAction *action : ui->menuTools->actions()) {
-	//	
-
-	//		QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
-
-	//		// Check if the pressed key is 'W'
-	//		if (keyEvent->key() == Qt::Key_W) {
-	//			// Handle the 'W' key press
-	//			QMessageBox::information(nullptr, "Information",	 
-	//			"W key pressed!");
-	//			// Your logic here
-	//		}
-	//		}
-	//}
 	return QObject::eventFilter(obj, event);
 	//iamramking
 
